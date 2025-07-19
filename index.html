@@ -1,0 +1,343 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Doraemon with HTML & CSS</title>
+    <style>
+        body {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            background-color: #f0f0f0;
+            margin: 0;
+            overflow: hidden; /* Hide any overflow from positioning */
+        }
+
+        .doraemon {
+            position: relative;
+            width: 300px;
+            height: 350px;
+            /* background-color: lightblue; Debugging background */
+            transform: scale(0.8); /* Make it slightly smaller to fit better */
+        }
+
+        /* Head */
+        .head {
+            width: 250px;
+            height: 250px;
+            background-color: #008DDA; /* Doraemon blue */
+            border-radius: 50%;
+            position: absolute;
+            top: 0;
+            left: 25px;
+            border: 2px solid #333; /* Outline */
+            z-index: 2;
+        }
+
+        /* Face */
+        .face {
+            width: 200px;
+            height: 180px;
+            background-color: #FFFFFF;
+            border-radius: 50%;
+            position: absolute;
+            top: 60px;
+            left: 50px;
+            border: 2px solid #333;
+            z-index: 3;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+        }
+
+        /* Eyes */
+        .eye-container {
+            display: flex;
+            gap: 10px;
+            position: absolute;
+            top: 25px; /* Adjust based on face position */
+            z-index: 4;
+        }
+
+        .eye {
+            width: 50px;
+            height: 60px;
+            background-color: #FFFFFF;
+            border-radius: 50%;
+            border: 2px solid #333;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .pupil {
+            width: 20px;
+            height: 20px;
+            background-color: #333;
+            border-radius: 50%;
+            position: absolute;
+            bottom: 10px;
+            right: 10px;
+        }
+
+        /* Nose */
+        .nose {
+            width: 30px;
+            height: 30px;
+            background-color: #EE4B2B; /* Red */
+            border-radius: 50%;
+            border: 2px solid #333;
+            position: absolute;
+            top: 90px;
+            z-index: 5;
+            left: 50%;
+            transform: translateX(-50%);
+        }
+
+        .nose-shine {
+            width: 10px;
+            height: 10px;
+            background-color: #FFFFFF;
+            border-radius: 50%;
+            position: absolute;
+            top: 5px;
+            left: 5px;
+            opacity: 0.7;
+        }
+
+        /* Nose line (whisker base) */
+        .nose-line {
+            width: 2px;
+            height: 60px;
+            background-color: #333;
+            position: absolute;
+            top: 120px;
+            left: 50%;
+            transform: translateX(-50%);
+            z-index: 4;
+        }
+
+        /* Mouth */
+        .mouth {
+            width: 120px;
+            height: 60px;
+            border: 2px solid #333;
+            border-radius: 0 0 50% 50%; /* Bottom half of a circle */
+            position: absolute;
+            top: 140px;
+            left: 50%;
+            transform: translateX(-50%);
+            z-index: 4;
+            overflow: hidden;
+            display: flex;
+            justify-content: center;
+            align-items: flex-end;
+        }
+
+        /* Tongue (optional, simple red arc) */
+        .tongue {
+            width: 60px;
+            height: 30px;
+            background-color: #EE4B2B;
+            border-radius: 0 0 50% 50%;
+            position: absolute;
+            bottom: 0;
+            transform: translateY(10px); /* Push it slightly outside the mouth to look like a tongue */
+        }
+
+
+        /* Whiskers */
+        .whisker {
+            width: 80px;
+            height: 2px;
+            background-color: #333;
+            position: absolute;
+            z-index: 4;
+        }
+
+        .whisker.left-top { transform: rotate(-10deg); top: 110px; left: -20px; }
+        .whisker.left-mid { top: 130px; left: -25px; }
+        .whisker.left-bottom { transform: rotate(10deg); top: 150px; left: -20px; }
+        .whisker.right-top { transform: rotate(10deg); top: 110px; right: -20px; }
+        .whisker.right-mid { top: 130px; right: -25px; }
+        .whisker.right-bottom { transform: rotate(-10deg); top: 150px; right: -20px; }
+
+
+        /* Body */
+        .body {
+            width: 200px;
+            height: 200px;
+            background-color: #008DDA; /* Doraemon blue */
+            border-radius: 50%;
+            position: absolute;
+            top: 150px;
+            left: 50px;
+            border: 2px solid #333;
+            z-index: 1; /* Behind the head slightly */
+        }
+
+        /* Collar */
+        .collar {
+            width: 160px;
+            height: 30px;
+            background-color: #EE4B2B; /* Red */
+            border-radius: 15px; /* Rounded ends */
+            position: absolute;
+            top: 200px;
+            left: 70px;
+            border: 2px solid #333;
+            z-index: 4;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        /* Bell */
+        .bell {
+            width: 40px;
+            height: 40px;
+            background-color: #FFD700; /* Gold/Yellow */
+            border-radius: 50%;
+            border: 2px solid #333;
+            position: relative; /* For the bell details */
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .bell-line {
+            width: 30px;
+            height: 2px;
+            background-color: #333;
+            position: absolute;
+            top: 10px;
+            border-radius: 1px;
+        }
+
+        .bell-dot {
+            width: 8px;
+            height: 8px;
+            background-color: #333;
+            border-radius: 50%;
+            position: absolute;
+            bottom: 8px;
+            left: 50%;
+            transform: translateX(-50%);
+        }
+
+        /* Pouch (White stomach area) */
+        .pouch {
+            width: 150px;
+            height: 120px;
+            background-color: #FFFFFF;
+            border-radius: 50%;
+            position: absolute;
+            top: 220px;
+            left: 75px;
+            border: 2px solid #333;
+            z-index: 3;
+            overflow: hidden; /* To hide the top part that goes under the collar */
+        }
+
+        /* Pocket (4D Pocket) */
+        .pocket {
+            width: 80px;
+            height: 60px;
+            background-color: #FFFFFF; /* Matches pouch for now, could be slightly different */
+            border: 2px solid #333;
+            border-radius: 0 0 40px 40px; /* Rounded bottom */
+            position: absolute;
+            top: 60px; /* Relative to pouch */
+            left: 50%;
+            transform: translateX(-50%);
+            z-index: 4; /* On top of pouch */
+        }
+
+        /* Arms (simplified - just circles for hands) */
+        .arm {
+            width: 80px;
+            height: 80px;
+            background-color: #FFFFFF; /* White hands */
+            border-radius: 50%;
+            border: 2px solid #333;
+            position: absolute;
+            z-index: 2;
+        }
+
+        .arm.left {
+            top: 250px;
+            left: 5px;
+        }
+
+        .arm.right {
+            top: 250px;
+            right: 5px;
+        }
+
+        /* Legs/Feet (simplified - just circles) */
+        .foot {
+            width: 100px;
+            height: 50px;
+            background-color: #FFFFFF;
+            border-radius: 50% / 30%; /* Oval shape */
+            border: 2px solid #333;
+            position: absolute;
+            top: 320px;
+            z-index: 1;
+        }
+
+        .foot.left {
+            left: 50px;
+        }
+
+        .foot.right {
+            right: 50px;
+        }
+
+    </style>
+</head>
+<body>
+    <div class="doraemon">
+        <div class="head">
+            <div class="face">
+                <div class="eye-container">
+                    <div class="eye"><div class="pupil"></div></div>
+                    <div class="eye"><div class="pupil"></div></div>
+                </div>
+                <div class="nose">
+                    <div class="nose-shine"></div>
+                </div>
+                <div class="nose-line"></div>
+                <div class="mouth">
+                    <div class="tongue"></div>
+                </div>
+                <div class="whisker left-top"></div>
+                <div class="whisker left-mid"></div>
+                <div class="whisker left-bottom"></div>
+                <div class="whisker right-top"></div>
+                <div class="whisker right-mid"></div>
+                <div class="whisker right-bottom"></div>
+            </div>
+        </div>
+
+        <div class="body">
+            <div class="collar">
+                <div class="bell">
+                    <div class="bell-line"></div>
+                    <div class="bell-dot"></div>
+                </div>
+            </div>
+            <div class="pouch">
+                <div class="pocket"></div>
+            </div>
+        </div>
+
+        <div class="arm left"></div>
+        <div class="arm right"></div>
+        <div class="foot left"></div>
+        <div class="foot right"></div>
+    </div>
+</body>
+</html>
